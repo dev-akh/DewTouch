@@ -1,3 +1,4 @@
+
 <div class="alert  ">
 <button class="close" data-dismiss="alert"></button>
 Question: Advanced Input Field</div>
@@ -15,35 +16,44 @@ Question: Advanced Input Field</div>
 
 </p>
 
-
-
 <div class="alert alert-success">
 <button class="close" data-dismiss="alert"></button>
 The table you start with</div>
 
-<table class="table table-striped table-bordered table-hover">
+<table class="table table-striped table-bordered table-hover repeater">
 <thead>
-<th><span id="add_item_button" class="btn mini green addbutton" onclick="addToObj=false">
-											<i class="icon-plus"></i></span></th>
+<th>
+	<span id="add_item_button" class="btn mini green addbutton" data-repeater-create>
+		<i class="icon-plus"></i>
+	</span>
+</th>
 <th>Description</th>
 <th>Quantity</th>
 <th>Unit Price</th>
 </thead>
-
-<tbody>
-	<tr>
-	<td></td>
-	<td><textarea name="data[1][description]" class="m-wrap  description required" rows="2" ></textarea></td>
-	<td><input name="data[1][quantity]" class=""></td>
-	<td><input name="data[1][unit_price]"  class=""></td>
+<tbody data-repeater-list="data">
+	<tr data-repeater-item>
+	<td> 
+		<button  data-repeater-delete class="delete-a-repater" >
+			<i class="icon-remove"></i>
+		</button>
+	</td>
+	<td class="td-description">
+		<input name="show-description" id="" class="input-show">
+		<textarea name="description" class="m-wrap  description required hide" rows="2"></textarea>
+	</td>
+	<td class="td-quantitiy">
+		<input name="quantity" class="input-show">
+	</td>
+	<td class="td-unit_price">
+		<input name="unit_price"  class="input-show">
+	</td>
 	
 </tr>
 
 </tbody>
 
 </table>
-
-
 <p></p>
 <div class="alert alert-info ">
 <button class="close" data-dismiss="alert"></button>
@@ -56,24 +66,60 @@ Your browser does not support the video tag.
 </video>
 </p>
 
-
-
-
+<style>
+	.input-show{
+		border:none;
+		background:transparent;
+		width:100%;
+	}
+	.input-show:focus, .input-show:focus ,.input-show:visited{ 
+		background:white;
+		outline: none;
+		border:none;
+		min-height:30px;
+	}
+	.description{
+		width:98%;
+	}
+	.delete-a-repater{
+		border: none;
+		font-weight: bold;
+		background: transparent;
+	}
+</style>
 
 <?php $this->start('script_own');?>
+<script type="text/javascript" src="/js/jquery.repeater.js"></script>
 <script>
+	
 $(document).ready(function(){
-
-	$("#add_item_button").click(function(){
-
-
-		alert("suppose to add a new row");
-		
-
+	descriptionAdd();
+	$('.repeater').repeater({
+		show: function () {
+                $(this).slideDown();
+				descriptionAdd();
+            },
+		hide: function (deleteElement) {
+			if(confirm('Are you sure you want to delete this element?')) {
+				$(this).slideUp(deleteElement);
+			}
+		}
+	});
+	function descriptionAdd(){
+		$('.td-description').click(function(){
+			$(this).children('.input-show').addClass('hide');
+			$(this).children('.description').removeClass('hide');
+			$(this).children('.description').focus();
 		});
-
+		$('.td-description .description').on('blur',function(){
+			$(this).closest('.td-description').children('.input-show').val($(this).val());
+			$(this).closest('.td-description').children('.input-show').removeClass('hide');
+			$(this).addClass('hide');
+		});
+	}
 	
 });
 </script>
+
 <?php $this->end();?>
 
