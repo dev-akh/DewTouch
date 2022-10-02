@@ -61,7 +61,7 @@ Video Instruction</div>
 
 <p style="text-align:left;">
 <video width="78%"   controls>
-  <source src="<?php echo Router::url("/video/q3_2.mov") ?>">
+  <source src="<?php echo Router::url("/video/q3_2.mp4") ?>">
 Your browser does not support the video tag.
 </video>
 </p>
